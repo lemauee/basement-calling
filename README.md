@@ -36,6 +36,10 @@ TODO: create requirements.txt
 ## Copy main.py somewhere reasonnable
 E.g. your home.
 
+## Insert your sip user/password into the respective lines in main.py
+`user=""`
+`pswd=""`
+
 ## Make it executeable
 `sudo chmod +x main.py`
 
@@ -44,6 +48,21 @@ Edit crontab
 `crontab -e`
 Add at the end
 `@reboot python3 /home/USERNAME/main.py`
+
+## systemd for autostart
+Change `User=` to your username set up on the raspi. Also change `WorkingDirectory=` to your users home.
+Change the path in ExecStart to `/home/USER/main.py`.
+
+Copy `basement_calling.service` to `/etc/systemd/system/`. (Or create the file anew using `sudo nano /etc/systemd/system/basement_calling.service`)
+
+Change the file permissions `sudo chmod 644 /etc/systemd/system/basement_calling.service`
+
+Reload systemd to index the new service `sudo systemctl daemon-reload`
+
+Enable the new service on startup `sudo systemctl enable basement_calling.service`
+
+### Get logs
+`sudo journalctl -u basement_calling.service`
 
 # Dealing with the Raspi remotely
 ## Reboot

@@ -1,0 +1,16 @@
+[Unit]
+Description=Simple basement alarm system.
+After=multi-user.target
+Requires=network.target
+
+[Service]
+Type=idle
+WorkingDirectory=/home/leopold
+User=leopold
+ExecStart=/usr/bin/python3 /home/leopold/main.py
+
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
