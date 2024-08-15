@@ -27,6 +27,9 @@ Incompatible Version is shipped with Raspbian (as of May 2024)
 ### SIP client
 `sudo apt-get install baresip`
 
+#### Configuration
+in `~/.baresip/accounts`
+
 ## Python dependencies
 TODO: create requirements.txt
 * baresipy (Python)
@@ -43,7 +46,7 @@ E.g. your home.
 ## Make it executeable
 `sudo chmod +x main.py`
 
-## crontab for autostart
+## crontab for autostart (only if you dont like/have systemd)
 Edit crontab
 `crontab -e`
 Add at the end

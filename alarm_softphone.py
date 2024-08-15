@@ -15,7 +15,8 @@ user = ""
 pswd = ""
 
 address = "tcp://basementip:13132"
-timeout = 1000 #ms
+timeout = 60000 #ms
+maxBadMsgs = 10
 
 def alarm_call():
     try:
@@ -44,15 +45,24 @@ while True:
         subscriber = Sub0(dial=address,topics=b"",recv_timeout=timeout,reconnect_time_min=timeout,reconnect_time_max=timeout, recv_buffer_size=1)
         printDirect("Subscribed!")
         recievedOnce = False
+        badMsgs = 0
         while True:
             try:
                 msg = subscriber.recv()
-                if msg != b'OK':
-                    printDirect('Alarm due to not OK message!')
+                if msg == b"ALARM":
+                    printDirect('Alarm due to not ALARM message!')
                     alarm_call()
-                elif not recievedOnce:
-                    printDirect('First OK message recieved!')
-                    recievedOnce = True
+                elif msg != b'OK':
+                    printDirect(f'Corrupted message \"{msg}\" recieved!')
+                    badMsgs += 1
+                    if badMsgs > maxBadMsgs:
+                        printDirect('Alarm due to too many corrupted messages!')
+                        alarm_call()
+                else:
+                    badMsgs = 0
+                    if not recievedOnce:
+                        printDirect('First OK message recieved!')
+                        recievedOnce = True
             except Timeout:
                 printDirect('Alarm due to recieve timeout!')
                 alarm_call()
