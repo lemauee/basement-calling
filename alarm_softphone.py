@@ -5,6 +5,7 @@ from time import sleep
 import sys
 
 from basement_calling import alarm_common
+from basement_calling import alarm_hid
 
 def alarm_call():
     to = "**9" # Call all connected Phones.
@@ -30,6 +31,8 @@ def alarm_call():
         alarm_common.printDirect(e)
         b.quit()
 
-alarm_common.alarm_common(alarm_call)
+hid = alarm_hid.AlarmHid(, , , , , )
+
+alarm_common.alarm_common(alarm_call, hid)
 
 
