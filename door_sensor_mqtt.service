@@ -1,0 +1,18 @@
+[Unit]
+Description=Reads a button connected to gpio to determine door state via mqtt.
+After=multi-user.target
+Requires=network.target
+
+[Service]
+Type=idle
+WorkingDirectory=/home/leopold
+User=leopold
+ExecStart=/usr/bin/python3 /home/leopold/door_sensor_mqtt.py
+
+WatchdogSec=10s
+
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
