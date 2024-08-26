@@ -1,0 +1,9 @@
+BTN_0 = 18
+BTN_1 = 23
+BTN_2 = 24
+BTN_3 = 25
+BTN_4 = 12
+BTN_5 = 16
+
+ALL = [BTN_0, BTN_1, BTN_2, BTN_3, BTN_4, BTN_5]
+

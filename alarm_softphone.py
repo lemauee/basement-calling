@@ -7,6 +7,9 @@ import sys
 from basement_calling import alarm_common
 from basement_calling import alarm_hid
 
+from schreihals_wiring import leds
+from schreihals_wiring import buttons
+
 def alarm_call():
     to = "**9" # Call all connected Phones.
     gateway = "fritz.box"
@@ -31,7 +34,7 @@ def alarm_call():
         alarm_common.printDirect(e)
         b.quit()
 
-hid = alarm_hid.AlarmHid(, , , , , )
+hid = alarm_hid.AlarmHid(buttons.BTN_0, buttons.BTN_1, buttons.BTN_2, leds.BIG_GREEN, leds.BIG_YELLOW, leds.BIG_RED)
 
 alarm_common.alarm_common(alarm_call, hid)
 
