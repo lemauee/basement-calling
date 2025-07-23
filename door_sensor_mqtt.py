@@ -21,7 +21,7 @@ quality_of_service = 0 # 0: best effort 1: at least once 2: exactly once
 printDirect('Started ...')
 wd = systemd_watchdog.watchdog()
 if not wd.is_enabled:
-    # Then it's probably not running is systemd with watchdog enabled
+    # Then it's probably not running as systemd with watchdog enabled
     raise Exception("Watchdog not enabled")
 
 printDirect('Setup ... ')

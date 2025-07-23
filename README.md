@@ -1,5 +1,5 @@
 # basement-calling
-Simple basement alarm system for Raspberry PI (5) alarming via SIP calls. Detection based on a simple door sensor.
+Simple basement alarm system for Raspberry PI (5) reporting a door status via MQTT.
 
 # Hardware
 
@@ -19,53 +19,37 @@ Simple basement alarm system for Raspberry PI (5) alarming via SIP calls. Detect
 ### Pip
 `sudo apt-get install python3-pip`
 
-### Updated GPIO for Raspi 5
-Incompatible Version is shipped with Raspbian (as of May 2024)
-`sudo apt remove python3-rpi.gpio`
-`sudo apt install python3-rpi-lgpio`
+### Paho MQTT
+`sudo apt install python3-paho-mqtt`
 
-### SIP client
-`sudo apt-get install baresip`
+### Install systemd-watchdog
+`pip install --break-system-packages systemd-watchdog`
 
-#### Configuration
-in `~/.baresip/accounts`
-
-## Python dependencies
-TODO: create requirements.txt
-* baresipy (Python)
-    * Pip may require some special flags to overwrite system pkgs, which didn`t break anything for me
-    * `pip install --break-system-packages baresipy`
-
-## Copy main.py somewhere reasonnable
+## Copy door_sensor_mqtt.py somewhere reasonnable
 E.g. your home.
 
-## Insert your sip user/password into the respective lines in main.py
-`user=""`
-`pswd=""`
+## Insert your mqtt broker IP into the respective line in main.py
+`broker_ip=""`
 
 ## Make it executeable
-`sudo chmod +x main.py`
+`sudo chmod +x door_sensor_mqtt.py`
 
-## crontab for autostart (only if you dont like/have systemd)
-Edit crontab
-`crontab -e`
-Add at the end
-`@reboot python3 /home/USERNAME/main.py`
-
-## systemd for autostart
+## systemd for autostart - door_sensor_mqtt.service
 Change `User=` to your username set up on the raspi. Also change `WorkingDirectory=` to your users home.
 Change the path in ExecStart to `/home/USER/main.py`.
 
-Copy `basement_calling.service` to `/etc/systemd/system/`. (Or create the file anew using `sudo nano /etc/systemd/system/basement_calling.service`)
+Copy `door_sensor_mqtt.service` to `/etc/systemd/system/`. (Or create the file anew using `sudo nano /etc/systemd/system/door_sensor_mqtt.service`)
 
-Change the file permissions `sudo chmod 644 /etc/systemd/system/basement_calling.service`
+Change the file permissions `sudo chmod 644 /etc/systemd/system/door_sensor_mqtt.service`
 
 Reload systemd to index the new service `sudo systemctl daemon-reload`
 
-Enable the new service on startup `sudo systemctl enable basement_calling.service`
+Enable the new service on startup `sudo systemctl enable door_sensor_mqtt.service`
+
+Start it right now `sudo systemctl enable door_sensor_mqtt.service`
 
 ### Get logs
-`sudo journalctl -u basement_calling.service`
+`sudo journalctl -u door_sensor_mqtt.service`
 
 # Dealing with the Raspi remotely
 ## Reboot
