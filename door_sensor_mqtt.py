@@ -19,7 +19,7 @@ topic = "basement/door"
 quality_of_service = 0 # 0: best effort 1: at least once 2: exactly once
 
 printDirect('Started ...')
-wd = systemd_watchdog.watchdog()
+wd = systemd_watchdog.WatchDog()
 if not wd.is_enabled:
     # Then it's probably not running as systemd with watchdog enabled
     raise Exception("Watchdog not enabled")
